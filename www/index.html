@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -16,7 +16,7 @@
         <h1>Pass saver</h1>
       </div>
       <div class="nav-links">
-        <ul>
+        <ul class="nav-list">
           <li><a href="#">Home</a></li>
           <li><a href="#">About</a></li>
           <li><a href="#">Contact</a></li>
@@ -53,7 +53,14 @@
       </table>
     </div>
   </main>
-
+  <dialog id="category-modal">
+  <h3>Nueva categoría</h3>
+  <input type="text" id="category-name" placeholder="Nombre de la categoría">
+  <div class="modal-buttons">
+    <button id="btn-cancel-category" type="button">Cancel</button>
+    <button id="btn-save-category" type="button">OK</button>
+  </div>
+</dialog>
   <script src="js/api.js"></script>
   <script src="js/index.js"></script>
 </body>
