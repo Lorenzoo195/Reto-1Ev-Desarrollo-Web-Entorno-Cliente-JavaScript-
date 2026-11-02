@@ -1,11 +1,10 @@
 body {
   font-family: sans-serif;
-  background-color: #0f172a; /* Fondo azul oscuro */
-  color: #e2e8f0;            /* Letra clara */
+  background-color: #0f172a; 
+  color: #e2e8f0;            
   padding: 20px;
 }
 
-/* 1. Barra superior */
 nav {
   background-color: #1e293b;
   padding: 15px;
@@ -20,7 +19,7 @@ nav {
 }
 
 .website-title h1 {
-  color: #38bdf8; /* Azul cian */
+  color: #38bdf8; 
 }
 
 .nav-links ul {
@@ -32,14 +31,13 @@ nav {
 .nav-links a {
   color: #94a3b8;
   text-decoration: none;
-  transition: color 0.2s; /* Suaviza el cambio de color */
+  transition: color 0.2s; 
 }
 
 .nav-links a:hover {
-  color: #38bdf8; /* Se ilumina en azul al pasar el ratón */
+  color: #38bdf8;
 }
 
-/* Botones principales */
 .add-options button {
   background-color: #0284c7;
   color: white;
@@ -52,14 +50,13 @@ nav {
 }
 
 .add-options button:hover {
-  background-color: #0369a1;        /* Se oscurece un poco */
-  transform: translateY(-2px);       /* Se levanta 2px */
+  background-color: #0369a1;        
+  transform: translateY(-2px);       
 }
 
-/* 2. Cuerpo en 2 columnas */
 main {
   display: grid;
-  grid-template-columns: 250px 1fr; /* Columna de 250px y el resto para la tabla */
+  grid-template-columns: 250px 1fr; 
   gap: 20px;
 }
 
@@ -69,7 +66,6 @@ main {
   border-radius: 8px;
 }
 
-/* 3. Lista de categorías */
 #category-list {
   list-style: none;
   padding: 0;
@@ -87,10 +83,9 @@ main {
 }
 
 #category-list li:hover {
-  background-color: #334155; /* Se resalta la categoría donde tienes el ratón */
+  background-color: #334155; 
 }
 
-/* 4. Tabla de sitios */
 #site-table {
   width: 100%;
   border-collapse: collapse;
@@ -104,10 +99,9 @@ main {
 }
 
 #site-table tbody tr:hover {
-  background-color: #243044; /* Resalta la fila de la tabla donde esté el ratón */
+  background-color: #243044;
 }
 
-/* 5. Botón de borrar */
 .btn-delete {
   background-color: #ef4444;
   color: white;
@@ -119,5 +113,5 @@ main {
 }
 
 .btn-delete:hover {
-  background-color: #b91c1c; /* Rojo más intenso al pasar el ratón */
+  background-color: #b91c1c; 
 }
