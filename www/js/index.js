@@ -20,6 +20,10 @@ loadCategories();
 const modal = document.querySelector('#category-modal');
 const btnAddCategory = document.querySelector('#btn-add-category');
 const btnCancelCategory = document.querySelector('#btn-cancel-category');
+const btnAddSite = document.querySelector('#btn-add-site');
+btnAddSite.addEventListener('click', () => {
+    window.location.href = 'form.html';
+});
 btnAddCategory.addEventListener('click', () => {
     modal.showModal();
 });
