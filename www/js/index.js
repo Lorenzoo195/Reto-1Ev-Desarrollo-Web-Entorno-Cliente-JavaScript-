@@ -35,12 +35,12 @@ guardarCategoria.addEventListener('click', async () => {
 
     if (!nombre) return;
 
-        await api.createCategory(nombre);
+    await api.createCategory(nombre);
 
-        input.value = '';
-        modal.close();
-        loadCategories();
-    
+    input.value = '';
+    modal.close();
+    loadCategories();
+
 });
 
 const categoryList = document.querySelector('#category-list');
@@ -48,19 +48,20 @@ categoryList.addEventListener('click', async (event) => {
     if (event.target.classList.contains('btn-delete')) {
         const id = event.target.dataset.id;
         await api.deleteCategory(id);
-        loadCategories();
-    } else{
-                const li = event.target.closest('li')
-                if(!li) return;
-                const id = li.dataset.id;
-                const categoria = await api.getSitesByCategory(id);
-                console.log(categoria)
-                
-                const tbody = document.querySelector('#site-table tbody');
-                tbody.innerHTML = '';
+        const linea = event.target.closest('li')
+        linea.remove();
+    } else {
+        const li = event.target.closest('li')
+        if (!li) return;
+        const id = li.dataset.id;
+        const categoria = await api.getSitesByCategory(id);
+        console.log(categoria)
 
-                for (let s of categoria.sites) {
-                    tbody.innerHTML += `
+        const tbody = document.querySelector('#site-table tbody');
+        tbody.innerHTML = '';
+
+        for (let s of categoria.sites) {
+            tbody.innerHTML += `
                         <tr>
                             <td>${s.name}</td>
                             <td>${s.user}</td>
@@ -70,6 +71,16 @@ categoryList.addEventListener('click', async (event) => {
                             </td>
                         </tr>
                     `;
-                }
+        }
+    }
+});
+
+const siteTbody = document.querySelector('#site-table tbody');
+siteTbody.addEventListener('click', async (event) => {
+    if (event.target.classList.contains('btn-delete')) {
+        const id = event.target.dataset.id;
+        await api.deleteSite(id)
+        const fila = event.target.closest('tr');
+        fila.remove();
     }
 });
