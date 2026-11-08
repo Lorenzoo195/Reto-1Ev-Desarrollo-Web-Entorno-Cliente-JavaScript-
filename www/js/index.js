@@ -18,7 +18,7 @@ loadCategories();
 
 
 const modal = document.querySelector('#category-modal');
-const btnAddCategory = document.querySelector('#add-category');
+const btnAddCategory = document.querySelector('#btn-add-category');
 const btnCancelCategory = document.querySelector('#btn-cancel-category');
 btnAddCategory.addEventListener('click', () => {
     modal.showModal();
@@ -35,24 +35,41 @@ guardarCategoria.addEventListener('click', async () => {
 
     if (!nombre) return;
 
-    try {
         await api.createCategory(nombre);
 
         input.value = '';
         modal.close();
         loadCategories();
-    } catch (error) {
-        console.error('Error al guardar la categoría:', error);
-    }
+    
 });
 
 const categoryList = document.querySelector('#category-list');
 categoryList.addEventListener('click', async (event) => {
     if (event.target.classList.contains('btn-delete')) {
         const id = event.target.dataset.id;
-
         await api.deleteCategory(id);
-
         loadCategories();
+    } else{
+                const li = event.target.closest('li')
+                if(!li) return;
+                const id = li.dataset.id;
+                const categoria = await api.getSitesByCategory(id);
+                console.log(categoria)
+                
+                const tbody = document.querySelector('#site-table tbody');
+                tbody.innerHTML = '';
+
+                for (let s of categoria.sites) {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${s.name}</td>
+                            <td>${s.user}</td>
+                            <td>${s.createdAt}</td>
+                            <td>
+                                <button class="btn-delete" data-id="${s.id}">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                }
     }
 });
