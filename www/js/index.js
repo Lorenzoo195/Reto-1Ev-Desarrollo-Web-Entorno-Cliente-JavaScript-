@@ -41,22 +41,6 @@ async function loadCategories() {
 
 loadCategories();
 
-/*async function loadCategories() {
-    const listaCategorias = await api.getCategories();
-
-    const contenedor = document.querySelector('#category-list')
-    contenedor.innerHTML = '';
-    for (let c of listaCategorias) {
-        contenedor.innerHTML += `
-        <li data-id="${c.id}">
-            <span>${c.name}</span>
-            <button class="btn-delete" data-id="${c.id}">Delete</button>
-        </li>
-    `;
-    }
-}
-loadCategories();
-*/
 
 const modal = document.querySelector('#category-modal');
 const btnAddCategory = document.querySelector('#btn-add-category');
@@ -137,21 +121,6 @@ categoryList.addEventListener('click', async (event) => {
         todosLosSitios = categoria.sites; 
         renderSites(todosLosSitios);
 
-        /*const tbody = document.querySelector('#site-table-tbody');
-        tbody.innerHTML = '';
-
-        for (let s of categoria.sites) {
-            tbody.innerHTML += `
-                        <tr>
-                            <td>${s.name}</td>
-                            <td>${s.user}</td>
-                            <td>${new Date(s.createdAt).toLocaleString()}</td>
-                            <td>
-                                <button class="btn-delete" data-id="${s.id}">Delete</button>
-                            </td>
-                        </tr>
-                    `;
-        }*/
     }
 });
 
