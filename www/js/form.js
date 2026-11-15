@@ -45,7 +45,7 @@ form.addEventListener('submit', async (event) => {
 });
 
 function generatePassword() {
-    const longitud = 10; 
+    const longitud = 10;
 
     const minusculas = 'abcdefghijklmnopqrstuvwxyz';
     const mayusculas = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -68,3 +68,54 @@ btnGenerate.addEventListener('click', () => {
     const passwordInput = document.querySelector('#site-password');
     passwordInput.value = generatePassword();
 });
+
+const inputName = document.querySelector('#site-name');
+const msgName = document.querySelector('#msg-name')
+inputName.addEventListener('blur', () => {
+
+    const valido = inputName.value.trim().length;
+    
+    if (valido >= 3) {
+        msgName.innerHTML = '<span class="msg-ok">Válido</span>';
+    } else {
+        msgName.innerHTML = '<span class="msg-error">El nombre debe tener al menos 3 caracteres</span>';
+    }
+})
+
+const inputUrl = document.querySelector('#site-url');
+const msgUrl = document.querySelector('#msg-url');
+inputUrl.addEventListener('blur', () =>{
+    const valido = inputUrl.value.trim();
+    
+    if (valido.length >= 10 && valido.includes('https://')) {
+        msgUrl.innerHTML = '<span class="msg-ok">Válido</span>';
+    } else {
+        msgUrl.innerHTML = '<span class="msg-error">La URL debe tener mínimo 10 caracteres y con https://</span>';
+    }
+})
+
+const inputUser = document.querySelector('#site-user');
+const msgUser = document.querySelector('#msg-user')
+inputUser.addEventListener('blur', () => {
+
+    const valido = inputUser.value.trim().length;
+    
+    if (valido >= 3) {
+        msgUser.innerHTML = '<span class="msg-ok">Válido</span>';
+    } else {
+        msgUser.innerHTML = '<span class="msg-error">La usuario debe tener mínimo 3 caracteres/</span>';
+    }
+})
+
+const inputPwd = document.querySelector('#site-password');
+const msgPwd = document.querySelector('#msg-pwd')
+inputPwd.addEventListener('blur', () => {
+
+    const valido = inputPwd.value.trim().length;
+    
+    if (valido >= 8) {
+        msgPwd.innerHTML = '<span class="msg-ok">Válido</span>';
+    } else {
+        msgPwd.innerHTML = '<span class="msg-error">La contraseña debe tener al menos 8 caracteres</span>';
+    }
+})

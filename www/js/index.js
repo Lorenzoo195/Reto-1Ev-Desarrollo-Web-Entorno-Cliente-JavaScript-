@@ -119,3 +119,8 @@ siteTbody.addEventListener('click', async (event) => {
         fila.remove();
     }
 });
+
+const filtroCat = document.querySelector('#search-categories')
+filtroCat.addEventListener('input', ()=>{
+    const busqueda = filtroCat.value.toLowerCase().trim();
+})
