@@ -1,6 +1,47 @@
 const api = new ApiService();
+let todasLasCategorias = [];
+let todosLosSitios = [];
+
+function renderCategories(lista) {
+    const contenedor = document.querySelector('#category-list');
+    contenedor.innerHTML = '';
+
+    for (let c of lista) {
+        contenedor.innerHTML += `
+            <li data-id="${c.id}">
+                <span>${c.name}</span>
+                <button class="btn-delete" data-id="${c.id}">Delete</button>
+            </li>
+        `;
+    }
+}
+
+function renderSites(lista) {
+    const tbody = document.querySelector('#site-table-tbody');
+    tbody.innerHTML = '';
+
+    for (let s of lista) {
+        tbody.innerHTML += `
+            <tr>
+                <td>${s.name}</td>
+                <td>${s.user}</td>
+                <td>${new Date(s.createdAt).toLocaleString()}</td>
+                <td>
+                    <button class="btn-delete" data-id="${s.id}">Delete</button>
+                </td>
+            </tr>
+        `;
+    }
+}
 
 async function loadCategories() {
+    todasLasCategorias = await api.getCategories();
+    renderCategories(todasLasCategorias);
+}
+
+loadCategories();
+
+/*async function loadCategories() {
     const listaCategorias = await api.getCategories();
 
     const contenedor = document.querySelector('#category-list')
@@ -15,7 +56,7 @@ async function loadCategories() {
     }
 }
 loadCategories();
-
+*/
 
 const modal = document.querySelector('#category-modal');
 const btnAddCategory = document.querySelector('#btn-add-category');
@@ -92,7 +133,11 @@ categoryList.addEventListener('click', async (event) => {
         const categoria = await api.getSitesByCategory(id);
         console.log(categoria)
 
-        const tbody = document.querySelector('#site-table-tbody');
+
+        todosLosSitios = categoria.sites; 
+        renderSites(todosLosSitios);
+
+        /*const tbody = document.querySelector('#site-table-tbody');
         tbody.innerHTML = '';
 
         for (let s of categoria.sites) {
@@ -106,7 +151,7 @@ categoryList.addEventListener('click', async (event) => {
                             </td>
                         </tr>
                     `;
-        }
+        }*/
     }
 });
 
@@ -121,6 +166,23 @@ siteTbody.addEventListener('click', async (event) => {
 });
 
 const filtroCat = document.querySelector('#search-categories')
-filtroCat.addEventListener('input', ()=>{
+filtroCat.addEventListener('input', () => {
     const busqueda = filtroCat.value.toLowerCase().trim();
+
+    const filtradas = todasLasCategorias.filter(c => 
+        c.name.toLowerCase().includes(busqueda)
+    );
+    renderCategories(filtradas);
 })
+
+const filtroSites = document.querySelector('#search-sites');
+
+filtroSites.addEventListener('input', () => {
+    const busqueda = filtroSites.value.toLowerCase().trim();
+
+    const filtrados = todosLosSitios.filter(s => 
+        s.name.toLowerCase().includes(busqueda)
+    );
+
+    renderSites(filtrados);
+});
