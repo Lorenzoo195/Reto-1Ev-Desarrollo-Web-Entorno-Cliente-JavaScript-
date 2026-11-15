@@ -28,7 +28,7 @@
   <main class="form-container">
     <div class="form-card">
       <h2>Add new site</h2>
-      <form id="site-form">
+      <form id="site-form" autocomplete="off">
 
         <div class="form-group">
           <label for="site-category">Category</label>
@@ -41,18 +41,21 @@
         <div class="form-group">
           <label for="site-name">Name</label>
           <input type="text" id="site-name" placeholder="Ej: Twitter, Facebook..." required>
+          <div id="msg-name"></div>         
         </div>
 
 
         <div class="form-group">
           <label for="site-url">URL</label>
           <input type="url" id="site-url" placeholder="https://ejemplo.com">
+          <div id="msg-url"></div>
         </div>
 
 
         <div class="form-group">
           <label for="site-user">User</label>
           <input type="text" id="site-user" placeholder="Nombre de usuario o correo" required>
+          <div id="msg-user"></div>
         </div>
 
 
@@ -62,6 +65,7 @@
             <input type="password" id="site-password" placeholder="Contraseña" required>
             <button type="button" id="btn-generate-password" class="btn-secondary">Generate</button>
           </div>
+          <div id="msg-pwd"></div>
         </div>
 
 
