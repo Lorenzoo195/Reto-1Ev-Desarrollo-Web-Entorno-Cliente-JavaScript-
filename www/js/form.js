@@ -11,7 +11,17 @@ async function loadFormCategories() {
     `;
     }
 }
-loadFormCategories();
+async function initForm() {
+    await loadFormCategories();
+
+    const params = new URLSearchParams(window.location.search);
+    const categoryId = params.get('category');
+
+    if (categoryId) {
+        document.querySelector('#site-category').value = categoryId;
+    }
+}
+initForm();
 const form = document.querySelector('#site-form');
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -32,4 +42,29 @@ form.addEventListener('submit', async (event) => {
     if (!categoryId || !name || !user || !password) return;
     await api.createSite(categoryId, siteData);
     window.location.href = 'index.html';
+});
+
+function generatePassword() {
+    const longitud = 10; 
+
+    const minusculas = 'abcdefghijklmnopqrstuvwxyz';
+    const mayusculas = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numeros = '0123456789';
+    const simbolos = '!@#$%^&*()_+~|}{[]:;?><';
+
+    const caracteres = minusculas + mayusculas + numeros + simbolos;
+    let password = '';
+
+    for (let i = 0; i < longitud; i++) {
+        const randomIndex = Math.floor(Math.random() * caracteres.length);
+        password += caracteres[randomIndex];
+    }
+
+    return password;
+}
+
+const btnGenerate = document.querySelector('#btn-generate-password');
+btnGenerate.addEventListener('click', () => {
+    const passwordInput = document.querySelector('#site-password');
+    passwordInput.value = generatePassword();
 });

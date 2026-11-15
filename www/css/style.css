@@ -87,6 +87,12 @@ main {
   background-color: #334155;
 }
 
+#category-list li.selected {
+  background-color: #0284c7; /* Azul destacado */
+  color: white;
+  font-weight: bold;
+}
+
 #site-table {
   width: 100%;
   border-collapse: collapse;

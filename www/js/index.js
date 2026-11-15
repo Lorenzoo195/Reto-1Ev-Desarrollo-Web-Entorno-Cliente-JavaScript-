@@ -20,9 +20,15 @@ loadCategories();
 const modal = document.querySelector('#category-modal');
 const btnAddCategory = document.querySelector('#btn-add-category');
 const btnCancelCategory = document.querySelector('#btn-cancel-category');
+
+let selectedCategoryId = null;
 const btnAddSite = document.querySelector('#btn-add-site');
 btnAddSite.addEventListener('click', () => {
-    window.location.href = 'form.html';
+    if (selectedCategoryId) {
+        window.location.href = `form.html?category=${selectedCategoryId}`
+    } else {
+        window.location.href = 'form.html';
+    }
 });
 btnAddCategory.addEventListener('click', () => {
     modal.showModal();
@@ -51,17 +57,42 @@ const categoryList = document.querySelector('#category-list');
 categoryList.addEventListener('click', async (event) => {
     if (event.target.classList.contains('btn-delete')) {
         const id = event.target.dataset.id;
-        await api.deleteCategory(id);
-        const linea = event.target.closest('li')
-        linea.remove();
+        Swal.fire({
+            title: "¿Estás seguro?",
+            text: "Se eliminará la categoría",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+
+                await api.deleteCategory(id);
+                event.target.closest('li').remove();
+
+                Swal.fire("¡Eliminado!", "La categoría ha sido borrada.", "success");
+
+                if (selectedCategoryId === id) {
+                    selectedCategoryId = null;
+                    const tbody = document.querySelector('#site-table-tbody');
+                    tbody.innerHTML = '';
+                }
+            }
+        });
+
     } else {
         const li = event.target.closest('li')
         if (!li) return;
         const id = li.dataset.id;
+        selectedCategoryId = id;
+
+        document.querySelectorAll('#category-list li').forEach(el => el.classList.remove('selected'));
+        li.classList.add('selected');
+
         const categoria = await api.getSitesByCategory(id);
         console.log(categoria)
 
-        const tbody = document.querySelector('#site-table tbody');
+        const tbody = document.querySelector('#site-table-tbody');
         tbody.innerHTML = '';
 
         for (let s of categoria.sites) {
@@ -69,7 +100,7 @@ categoryList.addEventListener('click', async (event) => {
                         <tr>
                             <td>${s.name}</td>
                             <td>${s.user}</td>
-                            <td>${s.createdAt}</td>
+                            <td>${new Date(s.createdAt).toLocaleString()}</td>
                             <td>
                                 <button class="btn-delete" data-id="${s.id}">Delete</button>
                             </td>
@@ -79,7 +110,7 @@ categoryList.addEventListener('click', async (event) => {
     }
 });
 
-const siteTbody = document.querySelector('#site-table tbody');
+const siteTbody = document.querySelector('#site-table-tbody');
 siteTbody.addEventListener('click', async (event) => {
     if (event.target.classList.contains('btn-delete')) {
         const id = event.target.dataset.id;
