@@ -4,24 +4,17 @@ let todosLosSitios = [];
 
 function renderCategories(lista) {
     const contenedor = document.querySelector('#category-list');
-    contenedor.innerHTML = '';
 
-    for (let c of lista) {
-        contenedor.innerHTML += `
+        contenedor.innerHTML = lista.map( c => `
             <li data-id="${c.id}">
                 <span>${c.name}</span>
                 <button class="btn-delete" data-id="${c.id}">Delete</button>
-            </li>
-        `;
-    }
+            </li>`).join('');
 }
 
 function renderSites(lista) {
     const tbody = document.querySelector('#site-table-tbody');
-    tbody.innerHTML = '';
-
-    for (let s of lista) {
-        tbody.innerHTML += `
+    tbody.innerHTML = lista.map(s => `
             <tr>
                 <td>${s.name}</td>
                 <td>${s.user}</td>
@@ -29,9 +22,7 @@ function renderSites(lista) {
                 <td>
                     <button class="btn-delete" data-id="${s.id}">Delete</button>
                 </td>
-            </tr>
-        `;
-    }
+            </tr> `).join('');
 }
 
 async function loadCategories() {
@@ -64,13 +55,14 @@ btnCancelCategory.addEventListener('click', () => {
 
 const guardarCategoria = document.querySelector('#btn-save-category')
 guardarCategoria.addEventListener('click', async () => {
-
+    const iconSelect = document.querySelector('#category-icon');
     const input = document.querySelector('#category-name');
     const nombre = input.value.trim();
 
     if (!nombre) return;
-
-    await api.createCategory(nombre);
+    const icono = iconSelect ? iconSelect.value : '📁';
+    const nombreCompleto = `${icono} ${nombre}`;
+    await api.createCategory(nombreCompleto);
 
     input.value = '';
     modal.close();

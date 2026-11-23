@@ -52,15 +52,21 @@ function generatePassword() {
     const numeros = '0123456789';
     const simbolos = '!@#$%^&*()_+~|}{[]:;?><';
 
-    const caracteres = minusculas + mayusculas + numeros + simbolos;
-    let password = '';
+    const cogerUno = (bolsa) => bolsa[Math.floor(Math.random() * bolsa.length)];
 
-    for (let i = 0; i < longitud; i++) {
-        const randomIndex = Math.floor(Math.random() * caracteres.length);
-        password += caracteres[randomIndex];
+    let passwordArray = [
+        cogerUno(minusculas),
+        cogerUno(mayusculas),
+        cogerUno(numeros),
+        cogerUno(simbolos)
+    ];
+
+    const todos = minusculas + mayusculas + numeros + simbolos;
+    for (let i = passwordArray.length; i < longitud; i++) {
+        passwordArray.push(cogerUno(todos));
     }
 
-    return password;
+    return passwordArray.sort(() => Math.random() - 0.5).join('');
 }
 
 const btnGenerate = document.querySelector('#btn-generate-password');
@@ -119,3 +125,16 @@ inputPwd.addEventListener('blur', () => {
         msgPwd.innerHTML = '<span class="msg-error">La contraseña debe tener al menos 8 caracteres</span>';
     }
 })
+const btnTogglePassword = document.querySelector('#btn-toggle-password');
+
+btnTogglePassword.addEventListener('click', () => {
+    const passwordInput = document.querySelector('#site-password');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        btnTogglePassword.textContent = '🔒'; 
+    } else {
+        passwordInput.type = 'password';
+        btnTogglePassword.textContent = '👁️'; 
+    }
+});
