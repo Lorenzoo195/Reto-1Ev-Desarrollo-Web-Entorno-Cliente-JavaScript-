@@ -14,12 +14,19 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   let categories = Array(10).fill(0).map( (v,idx) => ({
-    // id: idx,
-    name: faker.company.bsNoun(),
+   const icons = ['💼','📁','🏠','💳','🎮','🛒','🔒' ]
+    
+   let categories = Array(10).fill(0).map((v, idx) => {
+
+  const index = Math.floor(Math.random() * icons.length);
+  const randomIcon = icons[index];
+
+  return {
+    name: `${randomIcon} ${faker.company.bsNoun()}`,
     createdAt: new Date(),
     updatedAt: new Date(),
-   }))
+  };
+});
 
 
    await queryInterface.bulkInsert('Categories', categories)
